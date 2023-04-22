@@ -22,7 +22,6 @@ axios.get(bofhLink)
     .text()
   );
 
-
   var episodeNumber = (episodeElements
     .find('#body > p:nth-child(1) > span')
     .text()
