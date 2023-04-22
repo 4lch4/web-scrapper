@@ -1,37 +1,53 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-axios.get('https://www.theregister.com/2000/05/09/bofh_returns_from_the_dead/')
+//let bofhLink = 'https://www.theregister.com/2023/04/14/bofh_2023_episode_7/';
+let bofhLink = 'https://www.theregister.com/2022/12/09/bofh_2022_episode_23/';
+//let bofhLink = 'https://www.theregister.com/2000/05/09/bofh_returns_from_the_dead/';
+
+axios.get(bofhLink)
   .then(response => {
     // The HTML code of the website is stored in the "data" property of the response object
     const html = response.data;
     const $ = cheerio.load(html);
     const episodeElements = $('div[id=page] > article');
 
-    const episode = episodeElements.map((index, element) => {
-      return {
-        title: $(element).find('div[class=header_right] > h1').text(),
-        subtitle: $(element).find('div[class=header_right] > h2').text(),
-        pubDate: $(element).find('span[class=dateline]').text(), // this picks up way too much junk. will need to process it into something useful
-        story: $(element).find('div[id=body] > p').toArray().map(element => $(element).text()),
-      };
-    }).get();
+  var title = (episodeElements
+    .find('div[class=header_right] > h1')
+    .text()
+  );
 
-    let episode1 = new Map();
+  var subtitle = (episodeElements
+    .find('div[class=header_right] > h2')
+    .text()
+  );
 
-//trying to add all the data to a map that I can call and use as an object
 
-    episode1.set('title', $(element).find('div[class=header_right] > h1').text());
-    episode1.set('subtitle', $(element).find('div[class=header_right] > h2').text());
-    episode1.set('pubDate', $(element).find('span[class=dateline]').text());
-//    episode1.set('')
+  var episodeNumber = (episodeElements
+    .find('#body > p:nth-child(1) > span')
+    .text()
+  );
 
-    const story = (episodeElements
-      .find('div[id=body] > p')
-      .toArray()
-      .map(element => $(element).text()));
+  var story = (episodeElements
+    .find('div[id=body] > p')
+    .toArray()
+    .map(element => $(element)
+    .text()
+    )
+  );
 
-console.log(episode(0));
+  var pubDate = new Date (episodeElements
+      .find('span[class=dateline]')
+      .text()
+      .substring(4,15)
+  );
 
-//console.log(story);
+  let episode = new Map();
+  episode.set('title', title);
+  episode.set('subtitle', subtitle);
+  episode.set('number', episodeNumber);
+  episode.set('pubDate', pubDate);
+  episode.set('story', story);
+
+  console.log(episode.get('number'));
 });
