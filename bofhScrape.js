@@ -5,6 +5,8 @@ const cheerio = require('cheerio');
 let bofhLink = 'https://www.theregister.com/2022/12/09/bofh_2022_episode_23/';
 //let bofhLink = 'https://www.theregister.com/2000/05/09/bofh_returns_from_the_dead/';
 
+
+function getLink (bofhLink) {
 axios.get(bofhLink)
   .then(response => {
     // The HTML code of the website is stored in the "data" property of the response object
@@ -49,4 +51,5 @@ axios.get(bofhLink)
   episode.set('story', story);
 
   console.log(episode.get('number'));
-});
+})
+};
