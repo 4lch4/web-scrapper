@@ -7,13 +7,23 @@
 
 import {episode} from './testMap.js' ;
 
+import * as fs from 'fs';
+import * as df from 'date-format';
 
-// console.log(episode.get('title'))
+// console.log(episode.get('pubDate'));
 
-const fs = require('fs');
+let stringDate = df.asString('yyyy-MM-dd', episode.get('pubDate'));
 
-let story = episode.get('title');
+// console.log(stringDate);
 
-fs.writeFile('./story.txt', story, (err) =>{
+let fileName = "./" + stringDate + ".txt";
+
+ // console.log(fileName);
+
+fs.writeFile(fileName, "some more random test \n multi-line test", (err) =>{
+  if (err) throw err;
+})
+
+fs.appendFile(fileName, "\n", (err) => {
   if (err) throw err;
 })

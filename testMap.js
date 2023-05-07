@@ -3,7 +3,7 @@
 let title = "story title"
 let subtitle = "story subtitle"
 let episodeNumber = "episode number"
-const pubDate = new Date("20203-5-7");
+const pubDate = new Date();
 let story = "lori Ipsom ish text"
 
 let episode = new Map();
