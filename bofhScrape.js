@@ -47,6 +47,7 @@ axios.get(bofhLink)
   episode.set('number', episodeNumber);
   episode.set('pubDate', pubDate);
   episode.set('story', story);
+  episode.set('URL', bofhLink);
 
   // console.log(episode.get('number'));
 });
