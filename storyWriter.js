@@ -13,10 +13,9 @@ import * as df from 'date-format';
 // console.log(episode.get('pubDate'));
 
 let stringDate = df.asString('yyyy-MM-dd', episode.get('pubDate'));
+let stringYear = df.asString('yyyy', episode.get('pubdate'));
 
-// console.log(stringDate);
-
-let fileName = "./" + stringDate + ".txt";
+let fileName = "./" + stringYear + " " + episode.get('number') + (".txt");
 
  // console.log(fileName);
 
