@@ -1,6 +1,5 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
-const fs = require('fs');
 
 //let bofhLink = 'https://www.theregister.com/2023/04/14/bofh_2023_episode_7/';
 let bofhLink = 'https://www.theregister.com/2022/12/09/bofh_2022_episode_23/';
@@ -28,12 +27,6 @@ axios.get(bofhLink)
     .text()
   );
 
-  var pubDate = new Date (episodeElements
-      .find('span[class=dateline]')
-      .text()
-      .substring(4,15)
-  );
-
   var story = (episodeElements
     .find('div[id=body] > p')
     .toArray()
@@ -43,9 +36,9 @@ axios.get(bofhLink)
   );
 
   var pubDate = new Date (episodeElements
-    .find('span[class=dateline]')
-    .text()
-    .substring(4,15)
+      .find('span[class=dateline]')
+      .text()
+      .substring(4,15)
   );
 
   let episode = new Map();
@@ -54,7 +47,6 @@ axios.get(bofhLink)
   episode.set('number', episodeNumber);
   episode.set('pubDate', pubDate);
   episode.set('story', story);
-  episode.set('URL', bofhLink);
 
-  // console.log(episode.get('number'));
+  console.log(episode.get('number'));
 });

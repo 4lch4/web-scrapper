@@ -41,11 +41,32 @@ axios.get(bofhLink)
     .text()
     )
   );
+<<<<<<< HEAD
+  
+  var saveFolder = ('/home/zyzyx/git/web-scrapper/Epub/')
+  var fileName = (pubDate.getFullYear() + ' - ' + episodeNumber + '.epub');
+  var storyContent = ('# ' + title + '\n ## ' + subtitle);
+      
+fs.writeFile(saveFolder + fileName, storyContent, err => {
+      if (err) {
+        console.error(err);
+      }
+    });
+
+//  let episode = new Map();
+//    episode.set('title', title);
+//    episode.set('subtitle', subtitle);
+//    episode.set('number', episodeNumber);
+//    episode.set('pubDate', pubDate);
+//    episode.set('story', story);
+
+//  console.log(episode.get('number'));
+=======
 
   var pubDate = new Date (episodeElements
-    .find('span[class=dateline]')
-    .text()
-    .substring(4,15)
+      .find('span[class=dateline]')
+      .text()
+      .substring(4,15)
   );
 
   let episode = new Map();
@@ -57,4 +78,5 @@ axios.get(bofhLink)
   episode.set('URL', bofhLink);
 
   // console.log(episode.get('number'));
+>>>>>>> 98118695153e8ca6f73b8edafe879253d8f124ae
 });
