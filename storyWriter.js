@@ -20,11 +20,15 @@ fs.writeFile(fileName, "# " + episode.get('title') + "\n\n## " + episode.get('su
   if (err) throw err;
 })
 
-function append(story){
-  fs.appendFile(fileName, story, (err) => {
-    if (err) throw err;
-  });
-}
+// function append(story){
+//   fs.appendFile(fileName, story, (err) => {
+//     if (err) throw err;
+//   });
+// }
+
+arr.forEach(element => {
+  fs.appendFile(fielName, story, ())
+})
 
 append(episode.get('story'));
 append("\n\nPublished on: " + episode.get('pubDate'));
