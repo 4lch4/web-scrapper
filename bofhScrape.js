@@ -1,53 +1,58 @@
-const axios = require('axios');
-const cheerio = require('cheerio');
+import axios, * as others from 'axios';
+import * as cheerio from 'cheerio';
+import * as fs from 'fs';
+import * as df from 'date-format';
 
-//let bofhLink = 'https://www.theregister.com/2023/04/14/bofh_2023_episode_7/';
-let bofhLink = 'https://www.theregister.com/2022/12/09/bofh_2022_episode_23/';
-//let bofhLink = 'https://www.theregister.com/2000/05/09/bofh_returns_from_the_dead/';
+let URL = process.argv[2];
 
-axios.get(bofhLink)
-  .then(response => {
-    // The HTML code of the website is stored in the "data" property of the response object
+axios.get(URL).then(response => { // The HTML code of the website is stored in the "data" property of the response object
     const html = response.data;
     const $ = cheerio.load(html);
     const episodeElements = $('div[id=page] > article');
 
-  var title = (episodeElements
-    .find('div[class=header_right] > h1')
+var title = (episodeElements
+  .find('div[class=header_right] > h1')
+  .text()
+);
+
+var subtitle = (episodeElements
+  .find('div[class=header_right] > h2')
+  .text()
+);
+
+var episodeNumber = (episodeElements 
+  .find('#body > p:nth-child(1) > span')
+   .text()
+);
+
+var pubDate = new Date (episodeElements
+    .find('span[class=dateline]')
     .text()
-  );
+);
 
-  var subtitle = (episodeElements
-    .find('div[class=header_right] > h2')
-    .text()
-  );
+var story = (episodeElements
+  .find('div[id=body] > p')
+  .toArray()
+  .map(element => $(element)
+  .text()
+  )
+);
 
-  var episodeNumber = (episodeElements
-    .find('#body > p:nth-child(1) > span')
-    .text()
-  );
+let stringYear = df.asString('yyyy', pubDate);
 
-  var story = (episodeElements
-    .find('div[id=body] > p')
-    .toArray()
-    .map(element => $(element)
-    .text()
-    )
-  );
+let fileName = "./OutPut/" + stringYear + " " + episodeNumber + (".md");
 
-  var pubDate = new Date (episodeElements
-      .find('span[class=dateline]')
-      .text()
-      .substring(4,15)
-  );
+//build a big string here and do the writing all at once
+let bigString = "# " + title + "\n\n## " + subtitle + "\n\n";
 
-  let episode = new Map();
-  episode.set('title', title);
-  episode.set('subtitle', subtitle);
-  episode.set('number', episodeNumber);
-  episode.set('pubDate', pubDate);
-  episode.set('story', story);
-  episode.set('URL', bofhLink);
+story.forEach(element => {
+  bigString = bigString + element + "\n\n"
+  });
 
-  // console.log(episode.get('number'));
+bigString = bigString + "\n\n- Published on: " + pubDate + "\n\n- Written By: Simon Travaglia\n\n- Posted to: " + URL;
+
+ fs.writeFile(fileName, bigString, err =>{
+    if(err)
+      console.log(err);
+  });
 });
