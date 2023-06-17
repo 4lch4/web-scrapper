@@ -10,10 +10,10 @@ axios.get(URL).then(response => { // The HTML code of the website is stored in t
     const $ = cheerio.load(html);
     const episodeElements = $('div[id=page] > div[id=main-col] > div[class=headlines]');
 
+console.log(episodeElements);
+
 var links = (episodeElements
-  .find('#div.srow.rt-* > article:nth-child(1) > a href')
-  .toArray()
-  .map(element => $(element)
+  .find('#div.srow.rt-* > article:nth-child(1) > a href') 
   .text()
   )
 );
