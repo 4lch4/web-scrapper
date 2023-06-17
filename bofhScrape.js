@@ -22,12 +22,12 @@ var subtitle = (episodeElements
 
 var episodeNumber = (episodeElements 
   .find('#body > p:nth-child(1) > span')
-   .text()
+  .text()
 );
 
 var pubDate = new Date (episodeElements
-    .find('span[class=dateline]')
-    .text()
+  .find('span[class=dateline]')
+  .text()
 );
 
 var story = (episodeElements
