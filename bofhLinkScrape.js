@@ -8,27 +8,27 @@ let URL = process.argv[2];
 axios.get(URL).then(response => { // The HTML code of the website is stored in the "data" property of the response object
     const html = response.data;
     const $ = cheerio.load(html);
-    const episodeElements = $('div[id=page] > div[id=main-col] > div[class=headlines]');
+    const eplink = $('div[id=page] > div[id=main-col] > div[class=headlines]');
+    let sorw = $('srow rt-1*');
 
-var links = (episodeElements
-  .find('#div.srow.rt-* > article:nth-child(1) > a href')
-  .toArray()
-  .map(element => $(element)
-  .text()
-  )
-);
+var links = [];
 
-let bigString = 'temp';
-
-links.forEach(element => {
-  console.log(element);
-//  bigString = element + "\n\n"
-  });
- 
-//console.log(bigString);
-
- fs.writeFile('./OutPut/links.txt', bigString, err =>{
-    if(err)
-      console.log(err);
-  });
+$('.story_link').each( function (){
+  var link = $(this).attr('href');
+    //  console.log(link);
+  links.push({link});
 });
+
+//console.log(links);
+
+fs.writeFile(
+    './OutPut/links.txt',
+    JSON.stringify(links),
+    function (err) {
+      if (err) {
+        console.log('stuff happened here')
+      }
+    }
+  )
+}) 
+
