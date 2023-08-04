@@ -3,7 +3,7 @@ import * as cheerio from 'cheerio';
 import * as fs from 'fs';
 import * as df from 'date-format';
 
-let rawData = fs.readFileSync('./OutPut/links.txt');
+let rawData = fs.readFileSync('./OutPut/2018.json');
 let links = JSON.parse(rawData);
 
 links.forEach(scrapeStory);
