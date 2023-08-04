@@ -1,4 +1,4 @@
-import axios, * as others from 'axios';
+import axios, * as others from 'axios'; 
 import * as cheerio from 'cheerio';
 import * as fs from 'fs';
 import * as df from 'date-format';
@@ -16,7 +16,9 @@ var links = [];
 $('.story_link').each( function (){
   var link = $(this).attr('href');
     //  console.log(link);
-  links.push({link});
+  if (link.includes("bofh")){
+      links.push({link});
+    }
 });
 
 //console.log(links);
